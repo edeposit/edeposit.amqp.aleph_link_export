@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/urnnbn_notification_response" xmlns:tns="http://www.example.org/urnnbn_notification_response" elementFormDefault="qualified">
+
+    <complexType name="URNNBNNotificationResponseType">
+    	<sequence>
+    		<element name="batchNumber" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="records" type="tns:Records" maxOccurs="1" minOccurs="1"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="Records">
+    	<sequence>
+    		<element name="record" type="tns:Record" maxOccurs="unbounded" minOccurs="1"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="Record">
+    	<sequence>
+    		<element name="docNumber" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="barCode" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="status" type="tns:Status" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="reason" type="string" maxOccurs="1" minOccurs="0"></element>
+			<element name="uuid" type="string" maxOccurs="1" minOccurs="1"></element>
+    	</sequence>
+    </complexType>
+
+    <element name="URNNBNNotificationResponse">
+    	<complexType>
+    		<complexContent>
+    			<extension base="tns:URNNBNNotificationResponseType"/>
+    		</complexContent>
+    	</complexType>
+    </element>
+
+    <simpleType name="Status">
+    	<restriction base="string">
+    		<enumeration value="OK"></enumeration>
+    		<enumeration value="ERROR"></enumeration>
+    	</restriction>
+    </simpleType>
+</schema>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.logica.com/ndk/tm/urnnbn_notification" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.logica.com/ndk/tm/urnnbn_notification">
+
+    <complexType name="Record">
+    	<sequence>
+    		<element name="docNumber" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="barCode" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="url" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="uuid" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>			
+    		<element name="digitalRecords" type="tns:DigitalRecords"
+    			maxOccurs="1" minOccurs="1">
+    		</element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="DigitalRecord">
+    	<sequence>
+    		<element name="urnnbn" type="string" maxOccurs="1"
+    			minOccurs="1">
+    		</element>
+    		<element name="url" type="string" maxOccurs="1" minOccurs="1"></element>
+			<element name="uuid" type="string" maxOccurs="1" minOccurs="1"></element>
+    	</sequence>
+    </complexType>
+    
+    
+
+    <complexType name="Records">
+    	<sequence>
+    		<element name="record" type="tns:Record"
+    			maxOccurs="unbounded" minOccurs="1">
+    		</element>
+    	</sequence>
+    	
+    </complexType>
+
+    <complexType name="URNNBNNotificationType">
+    	<sequence>
+    		<element name="batchNumber" type="string" maxOccurs="1" minOccurs="1"></element>
+    		<element name="records" type="tns:Records" maxOccurs="1" minOccurs="1"></element>
+    	</sequence>
+    </complexType>
+
+    <element name="URNNBNNotification">
+    	<complexType>
+    		<complexContent>
+    			<extension base="tns:URNNBNNotificationType"/>
+    		</complexContent>
+    	</complexType>
+    </element>
+
+    <complexType name="DigitalRecords">
+    	<sequence>
+    		<element name="digitalRecord" type="tns:DigitalRecord" maxOccurs="unbounded" minOccurs="1"></element>
+    	</sequence>
+    </complexType>
+</schema>
