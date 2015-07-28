@@ -6,7 +6,7 @@
         <xs:element name="uuid" type="xs:string" minOccurs="1" maxOccurs="1" />
         <xs:element name="doc_number" type="xs:string" minOccurs="1" maxOccurs="1" />
         <xs:element name="kramerius_url" type="xs:anyURI" minOccurs="1" maxOccurs="1" />
-        <xs:element name="public_url" type="xs:anyURI" minOccurs="0" maxOccurs="1" />
+        <xs:element name="document_url" type="xs:anyURI" minOccurs="0" maxOccurs="1" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
