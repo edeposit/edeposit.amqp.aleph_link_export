@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<results>
+    <result>
+        <uuid>asdasd</uuid>
+        <doc_number>12133</doc_number>
+        <status>OK</status>
+    </result>
+    <result>
+        <uuid>asdasd</uuid>
+        <doc_number>12133</doc_number>
+        <status>ERROR</status>
+    </result>
+</results>
