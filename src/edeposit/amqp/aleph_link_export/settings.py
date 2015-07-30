@@ -32,7 +32,8 @@ import os.path
 # Module configuration ========================================================
 
 #: Path to the directory with zeo.conf and zeo_client.conf.
-OUTPUT_DIRECTORY = "/home/aleph_export/"
+OUTPUT_DIRECTORY = "/home/aleph_export/edep2aleph"
+RESPONSE_DIRECTORY = "/home/aleph_export/aleph2edep"
 
 
 # User configuration reader (don't edit this) =================================
