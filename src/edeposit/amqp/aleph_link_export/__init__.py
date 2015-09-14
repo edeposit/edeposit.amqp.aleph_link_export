@@ -12,9 +12,35 @@
 
 
 # Functions & classes =========================================================
+def _instanceof(instance, cls):
+    """
+    Check type of `instance` by matching ``.__name__`` with `cls.__name__`.
+    """
+    return type(instance).__name__ == cls.__name__
 
 
+# Main function ===============================================================
+def reactToAMQPMessage(message, send_back):
+    """
+    React to given (AMQP) message. `message` is expected to be
+    :py:func:`collections.namedtuple` structure from :mod:`.structures` filled
+    with all necessary data.
 
-# Main program ================================================================
-if __name__ == '__main__':
-    pass
+    Args:
+        message (object): One of the request objects defined in
+                          :mod:`.structures`.
+        send_back (fn reference): Reference to function for responding. This is
+                  useful for progress monitoring for example. Function takes
+                  one parameter, which may be response structure/namedtuple, or
+                  string or whatever would be normally returned.
+
+    Returns:
+        object: Response class from :mod:`structures`.
+
+    Raises:
+        ValueError: if bad type of `message` structure is given.
+    """
+    if _instanceof(message, SaveRequest):
+        pass
+
+    raise ValueError("'%s' is unknown type of request!" % str(type(message)))
