@@ -6,7 +6,6 @@
 # Imports =====================================================================
 from collections import namedtuple
 
-from xmltodict import unparse
 from odictliteral import odict
 
 
@@ -24,7 +23,7 @@ class LinkUpdateRequest(namedtuple("LinkUpdateRequest", ["uuid",
             kramerius_url
         )
 
-    def to_xml(self):
+    def to_dict_xml(self):
         record = odict[
             "record": odict[
                 "uuid": self.uuid,
@@ -37,7 +36,7 @@ class LinkUpdateRequest(namedtuple("LinkUpdateRequest", ["uuid",
         if not self.kramerius_url:
             del record["record"]["kramerius_url"]
 
-        return unparse(record, full_document=False, pretty=True)
+        return record
 
 
 class StatusRequest(namedtuple("StatusRequest", [])):
