@@ -13,3 +13,7 @@ class LinkUpdateRequest(namedtuple("LinkUpdateRequest", ["uuid",
                                                          "kramerius_url",
                                                          "document_url"])):
     pass
+
+
+class StatusRequest(namedtuple("StatusRequest", [])):
+    pass
