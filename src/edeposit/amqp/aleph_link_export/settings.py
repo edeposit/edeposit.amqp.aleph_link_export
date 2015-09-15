@@ -17,7 +17,7 @@ Note:
 Example of the configuration file (``$HOME/edeposit/aleph_export.json``)::
 
     {
-        "OUTPUT_DIRECTORY": "username"
+        "OUTPUT_DIR": "username"
     }
 
 Attributes
@@ -31,9 +31,10 @@ import os.path
 
 # Module configuration ========================================================
 
-#: Path to the directory with zeo.conf and zeo_client.conf.
-OUTPUT_DIRECTORY = "/home/aleph_export/edep2aleph"
-RESPONSE_DIRECTORY = "/home/aleph_export/aleph2edep"
+#: Path to the dir with zeo.conf and zeo_client.conf.
+REQUEST_DIR = "/home/aleph_export/edep2aleph"
+RESPONSE_DIR = "/home/aleph_export/aleph2edep"
+DATABASE_DIR = "/home/aleph_export"
 
 
 # User configuration reader (don't edit this) =================================
