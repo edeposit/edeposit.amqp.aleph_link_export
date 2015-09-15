@@ -4,11 +4,11 @@
 # Interpreter version: python 2.7
 #
 # Imports =====================================================================
+from structures import StatusRequest
+from structures import LinkUpdateRequest
+from structures import LinkUpdateResponse
 
-
-
-# Variables ===================================================================
-
+import link_export
 
 
 # Functions & classes =========================================================
@@ -17,6 +17,11 @@ def _instanceof(instance, cls):
     Check type of `instance` by matching ``.__name__`` with `cls.__name__`.
     """
     return type(instance).__name__ == cls.__name__
+
+
+def send_responses(send_back):
+    for resp in link_export.collect_responses():
+        send_back(resp)
 
 
 # Main function ===============================================================
@@ -40,7 +45,12 @@ def reactToAMQPMessage(message, send_back):
     Raises:
         ValueError: if bad type of `message` structure is given.
     """
-    if _instanceof(message, SaveRequest):
-        pass
+    if _instanceof(message, LinkUpdateRequest):
+        link_export.export(message)
+
+        return send_responses(send_back)
+
+    elif _instanceof(message, StatusRequest):
+        return send_responses(send_back)
 
     raise ValueError("'%s' is unknown type of request!" % str(type(message)))
