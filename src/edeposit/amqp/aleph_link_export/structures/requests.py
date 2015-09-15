@@ -6,13 +6,38 @@
 # Imports =====================================================================
 from collections import namedtuple
 
+from xmltodict import unparse
+from odictliteral import odict
+
 
 # Requests ====================================================================
 class LinkUpdateRequest(namedtuple("LinkUpdateRequest", ["uuid",
                                                          "doc_number",
-                                                         "kramerius_url",
-                                                         "document_url"])):
-    pass
+                                                         "document_url",
+                                                         "kramerius_url"])):
+    def __new__(cls, uuid, doc_number, document_url, kramerius_url=None):
+        return super(LinkUpdateRequest, cls).__new__(
+            cls,
+            uuid,
+            doc_number,
+            document_url,
+            kramerius_url
+        )
+
+    def to_xml(self):
+        record = odict[
+            "record": odict[
+                "uuid": self.uuid,
+                "doc_number": self.doc_number,
+                "kramerius_url": self.kramerius_url,
+                "document_url": self.document_url,
+            ]
+        ]
+
+        if not self.kramerius_url:
+            del record["record"]["kramerius_url"]
+
+        return unparse(record, full_document=False, pretty=True)
 
 
 class StatusRequest(namedtuple("StatusRequest", [])):
