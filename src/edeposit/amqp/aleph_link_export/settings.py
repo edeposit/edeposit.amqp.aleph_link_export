@@ -35,6 +35,7 @@ import os.path
 REQUEST_DIR = "/home/aleph_export/edep2aleph"
 RESPONSE_DIR = "/home/aleph_export/aleph2edep"
 DATABASE_DIR = "/home/aleph_export"
+LOG_PATH = os.path.join(DATABASE_DIR, "link_export.log")  #: Path to the log.
 
 
 # User configuration reader (don't edit this) =================================
