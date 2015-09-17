@@ -10,5 +10,6 @@ from collections import namedtuple
 # Requests ====================================================================
 class LinkUpdateResponse(namedtuple("LinkUpdateResponse", ["uuid",
                                                            "doc_number",
-                                                           "status"])):
+                                                           "status",
+                                                           "_session_id"])):
     pass
