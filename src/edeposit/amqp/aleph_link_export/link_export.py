@@ -4,27 +4,40 @@
 # Interpreter version: python 2.7
 #
 # Imports =====================================================================
+import shelve
+from contextlib import contextmanager
+
 import xmltodict
 
 from settings import LOG_PATH
 from settings import REQUEST_DIR
 from settings import RESPONSE_DIR
-from settings import DATABASE_DIR
+from settings import DATABASE_KEY
+from settings import DATABASE_PATH
 
 from structures import LinkUpdateResponse
 
 
 # Variables ===================================================================
-
-
-
 # Functions & classes =========================================================
+# in 2.7, there is no context manager for shelve :S
+@contextmanager
+def shelver(fn):
+    db = shelve.open(fn)
+    yield db
+    db.close()
+
+
 class RequestDatabase(object):
     def __init__(self, req_path=REQUEST_DIR, resp_path=RESPONSE_DIR,
-                 log_path=LOG_PATH):
+                 log_path=LOG_PATH, db_path=DATABASE_PATH,
+                 db_key=DATABASE_KEY):
+        self.db_path = db_path
+        self.log_path = log_path
         self.req_path = req_path
         self.resp_path = resp_path
-        self.log_path = log_path
+
+        self._db_key = db_key
 
         self._req_queue = {}
         self._resp_queue = []
@@ -46,7 +59,7 @@ class RequestDatabase(object):
 
         self.log("Received response session_id(%s)." % response._session_id)
 
-    def process_responses(self, xml):
+    def _process_responses(self, xml):
         xdom = xmltodict.parse(xml)
 
         for result in xdom["results"]:
@@ -80,6 +93,29 @@ class RequestDatabase(object):
             {"records": self._req_queue if self._req_queue else None},
             pretty=True
         )
+
+    def save(self):
+        with open(self.resp_path) as resp_f:
+            xml = resp_f.read()
+        self._process_responses(xml)
+
+        # write request XML
+        with open(self.req_path) as req_f:
+            req_f.write(self.to_xml)
+
+        # save this object to database
+        with shelver(self.db_path) as db:
+            db[self._db_key] = self
+
+    @staticmethod
+    def load(fn=DATABASE_PATH, db_key=DATABASE_KEY):
+        with shelver(fn) as db:
+            obj = db.get(db_key, None)
+
+        if obj:
+            return obj
+
+        return RequestDatabase(db_path=fn)
 
 
 def export(request):
