@@ -6,20 +6,15 @@
 # Imports =====================================================================
 import pytest
 
-
-# Variables ===================================================================
-
-
-
-# Fixtures ====================================================================
-# @pytest.fixture
-# def fixture():
-#     pass
-
-# with pytest.raises(Exception):
-#     raise Exception()
+from aleph_link_export.structures import LinkUpdateResponse
 
 
 # Tests =======================================================================
-def test_():
-    pass
+def test_LinkUpdateResponse():
+    lur = LinkUpdateResponse(
+        status="status",
+        session_id="session_id",
+    )
+
+    assert lur.status == "status"
+    assert lur.session_id == "session_id"
