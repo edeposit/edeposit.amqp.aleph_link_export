@@ -8,8 +8,6 @@ from collections import namedtuple
 
 
 # Requests ====================================================================
-class LinkUpdateResponse(namedtuple("LinkUpdateResponse", ["uuid",
-                                                           "doc_number",
-                                                           "status",
+class LinkUpdateResponse(namedtuple("LinkUpdateResponse", ["status",
                                                            "session_id"])):
     pass
