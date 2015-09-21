@@ -44,27 +44,27 @@ class RequestDatabase(object):
         self._log = []
 
     def add_request(self, request):
-        self._req_queue[request._session_id] = request
+        self._req_queue[request.session_id] = request
 
         self.log(
             "Received request session_id(%s): %s" % (
-                request._session_id,
+                request.session_id,
                 repr(request)
             )
         )
 
     def _add_response(self, response):
         self._resp_queue.append(response)
-        del self._req_queue[response._session_id]
+        del self._req_queue[response.session_id]
 
-        self.log("Received response session_id(%s)." % response._session_id)
+        self.log("Received response session_id(%s)." % response.session_id)
 
     def _process_responses(self, xml):
         xdom = xmltodict.parse(xml)
 
         for result in xdom["results"]:
             # to allow ** creation of namedtuple
-            result["_session_id"] = result["@session_id"]
+            result["session_id"] = result["@session_id"]
             del result["@session_id"]
 
             self._add_response(LinkUpdateResponse(**result))
@@ -77,7 +77,7 @@ class RequestDatabase(object):
 
     def get_responses(self):
         session_ids = ", ".join(
-            resp._session_id
+            resp.session_id
             for resp in self._resp_queue
         )
 
