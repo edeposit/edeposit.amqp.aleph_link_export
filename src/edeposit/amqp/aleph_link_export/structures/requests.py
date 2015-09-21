@@ -14,8 +14,9 @@ class LinkUpdateRequest(namedtuple("LinkUpdateRequest", ["uuid",
                                                          "doc_number",
                                                          "document_url",
                                                          "kramerius_url",
+                                                         "urn_nbn",
                                                          "session_id_"])):
-    def __new__(cls, uuid, doc_number, document_url, session_id_,
+    def __new__(cls, uuid, doc_number, document_url, session_id_, urn_nbn=None,
                 kramerius_url=None):
         return super(LinkUpdateRequest, cls).__new__(
             cls,
@@ -23,6 +24,7 @@ class LinkUpdateRequest(namedtuple("LinkUpdateRequest", ["uuid",
             doc_number=doc_number,
             document_url=document_url,
             kramerius_url=kramerius_url,
+            urn_nbn=urn_nbn,
             session_id_=session_id_
         )
 
@@ -32,6 +34,7 @@ class LinkUpdateRequest(namedtuple("LinkUpdateRequest", ["uuid",
                 "@session_id": self.session_id_,
                 "uuid": self.uuid,
                 "doc_number": self.doc_number,
+                "urn_nbn": self.urn_nbn,
                 "kramerius_url": self.kramerius_url,
                 "document_url": self.document_url,
             ]
@@ -39,6 +42,9 @@ class LinkUpdateRequest(namedtuple("LinkUpdateRequest", ["uuid",
 
         if not self.kramerius_url:
             del record["record"]["kramerius_url"]
+
+        if not self.urn_nbn:
+            del record["record"]["urn_nbn"]
 
         return record
 
