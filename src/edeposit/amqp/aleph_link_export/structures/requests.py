@@ -76,4 +76,3 @@ class StatusRequest(namedtuple("StatusRequest", [])):
     This structure is used to wake the daemon to go and check whether the files
     on the disc changed or not.
     """
-    pass

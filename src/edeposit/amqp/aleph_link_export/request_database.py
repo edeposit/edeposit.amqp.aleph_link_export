@@ -37,10 +37,10 @@ class RequestDatabase(object):
     """
     def __init__(self, req_fn=REQUEST_FN, resp_fn=RESPONSE_FN, log_fn=LOG_FN,
                  db_fn=DATABASE_FN, db_key=DATABASE_KEY):
-        self.db_fn = db_fn
-        self.log_fn = log_fn
-        self.req_fn = req_fn
-        self.resp_fn = resp_fn
+        self.db_fn = db_fn  #: Path to the database file.
+        self.log_fn = log_fn  #: Path to the log file.
+        self.req_fn = req_fn  #: Path to the request XML.
+        self.resp_fn = resp_fn  #: Path to the response XML.
 
         self._db_key = db_key
 
