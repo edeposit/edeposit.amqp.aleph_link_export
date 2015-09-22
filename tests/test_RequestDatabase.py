@@ -66,6 +66,13 @@ def test_save(request_database, link_update_req):
         msg = "Received request session_id(%s)" % link_update_req.session_id
         assert msg in f.read()
 
+    with open(request_database.req_fn) as f:
+        data = f.read()
+
+    assert "<records>" in data
+    sess = '<record session_id="%s">' % link_update_req.session_id
+    assert sess in data
+
 
 def test_get_responses(request_database, link_update_req):
     request_database.add_request(link_update_req)
