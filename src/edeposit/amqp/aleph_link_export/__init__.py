@@ -20,8 +20,22 @@ def _instanceof(instance, cls):
 
 
 def send_responses(send_back):
-    for resp in link_export.collect_responses():
+    """
+    Send back all reponses, return the last (returned things are automatically
+    sent back).
+    """
+    responses = link_export.collect_responses()
+
+    if not responses:
+        return []
+
+    if len(responses) == 1:
+        return responses[0]
+
+    for resp in responses[:-1]:
         send_back(resp)
+
+    return responses[-1]
 
 
 # Main function ===============================================================
