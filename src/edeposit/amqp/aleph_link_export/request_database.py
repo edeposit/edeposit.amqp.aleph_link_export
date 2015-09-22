@@ -5,6 +5,7 @@
 #
 # Imports =====================================================================
 import shelve
+import os.path
 from contextlib import contextmanager
 
 import xmltodict
@@ -95,13 +96,14 @@ class RequestDatabase(object):
         )
 
     def save(self):
-        with open(self.resp_path) as resp_f:
-            xml = resp_f.read()
-        self._process_responses(xml)
+        if os.path.exists(self.resp_path):
+            with open(self.resp_path) as resp_f:
+                xml = resp_f.read()
+            self._process_responses(xml)
 
         # write request XML
-        with open(self.req_path) as req_f:
-            req_f.write(self.to_xml)
+        with open(self.req_path, "w") as req_f:
+            req_f.write(self.to_xml())
 
         # save this object to database
         with shelver(self.db_path) as db:
