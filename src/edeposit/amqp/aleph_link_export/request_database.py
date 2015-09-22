@@ -44,7 +44,26 @@ class RequestDatabase(object):
         self._resp_queue = []
         self._log = []
 
+    def log(self, msg):
+        """
+        Log the message to the log.
+
+        Args:
+            msg (str): Message which should be logged.
+        """
+        msg = msg.strip() + "\n"
+
+        with open(self.log_path, "a") as f:
+            f.write(msg)
+
     def add_request(self, request):
+        """
+        Add new `request` object to database.
+
+        Args:
+            request (obj): Object with defined :attr:`session_id` property and
+                    :meth:`to_xml_dict` method.
+        """
         self._req_queue[request.session_id] = request
 
         self.log(
@@ -56,33 +75,48 @@ class RequestDatabase(object):
 
     def _add_response(self, response):
         self._resp_queue.append(response)
-        del self._req_queue[response.session_id]
+
+        if response.session_id in self._req_queue:
+            del self._req_queue[response.session_id]
 
         self.log("Received response session_id(%s)." % response.session_id)
 
-    def _process_responses(self, xml):
+    def _process_responses(self):
+        if not os.path.exists(self.resp_path):
+            self.log(
+                "._process_responses() called, "
+                "but '%s' doesn't exists!" % self.resp_path
+            )
+            return
+
+        with open(self.resp_path) as resp_f:
+            xml = resp_f.read()
+
         xdom = xmltodict.parse(xml)
 
-        for result in xdom["results"]:
+        results = xdom.get("results", {}).get("result", [])
+        if type(results) not in [list, tuple]:
+            results = [results]
+
+        for result in results:
             # to allow ** creation of namedtuple
             result["session_id"] = result["@session_id"]
             del result["@session_id"]
 
             self._add_response(LinkUpdateResponse(**result))
 
-    def log(self, msg):
-        msg = msg.strip() + "\n"
-
-        with open(self.log_path, "a") as f:
-            f.write(msg)
-
     def get_responses(self):
+        self._process_responses()
+
         session_ids = ", ".join(
             resp.session_id
             for resp in self._resp_queue
         )
 
-        self.log("Sen't back responses for: session_id(%s)." % session_ids)
+        if session_ids:
+            self.log("Sent back responses for: session_id(%s)." % session_ids)
+        else:
+            self.log(".get_repsponses(): No requests returned.")
 
         responses = self._resp_queue
         self._resp_queue = []
@@ -96,11 +130,9 @@ class RequestDatabase(object):
         )
 
     def save(self):
-        if os.path.exists(self.resp_path):
-            with open(self.resp_path) as resp_f:
-                xml = resp_f.read()
-            self._process_responses(xml)
-
+        """
+        Read the response XML, process it, save the database and request XML.
+        """
         # write request XML
         with open(self.req_path, "w") as req_f:
             req_f.write(self.to_xml())
