@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.3.0
+-----
+    - Added almost 100% test coverage (everything with meaning is covered).
+    - Fixed a LOT of bugs.
+    - Added docstrings for every member of the package.
+
 0.2.1
 -----
     - Response structure updated.
