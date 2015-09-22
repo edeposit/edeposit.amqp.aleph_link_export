@@ -32,6 +32,7 @@ def export(request):
         request (obj): Instance of :class:`.LinkUpdateRequest`.
     """
     REQUEST_DATABASE.add_request(request)
+    REQUEST_DATABASE.save()
 
 
 def collect_responses():
@@ -41,4 +42,7 @@ def collect_responses():
     Returns:
         list: List of :class:`.LinkUpdateResponse` objects.
     """
-    return REQUEST_DATABASE.get_responses()
+    resp = REQUEST_DATABASE.get_responses()
+    REQUEST_DATABASE.save()
+
+    return resp
