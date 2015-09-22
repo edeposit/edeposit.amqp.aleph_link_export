@@ -39,9 +39,6 @@ def request_database():
         db_path=os.path.join(TMP_DIR, "database.shelve"),
     )
 
-# with pytest.raises(Exception):
-#     raise Exception()
-
 
 # Tests =======================================================================
 def test_RequestDatabase_init():
@@ -127,3 +124,20 @@ def test_get_multiple_responses(request_database):
 
     assert resp[2].session_id == "ccc"
     assert resp[2].status == "ERROR"
+
+
+def test_load_database(request_database, link_update_req):
+    request_database.add_request(link_update_req)
+
+    rd = RequestDatabase.load(fn=request_database.db_path)
+    assert rd
+    assert rd.req_path == request_database.req_path
+    assert rd._req_queue == request_database._req_queue
+    assert rd._resp_queue == request_database._resp_queue
+
+
+def test_load_database_creator(request_database):
+    rd = RequestDatabase.load(
+        fn=os.path.join(TMP_DIR, "azgabash.shelve")
+    )
+    assert rd
