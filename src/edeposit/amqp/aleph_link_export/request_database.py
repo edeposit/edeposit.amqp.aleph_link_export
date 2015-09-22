@@ -19,11 +19,12 @@ from settings import DATABASE_PATH
 from structures import LinkUpdateResponse
 
 
-# Variables ===================================================================
 # Functions & classes =========================================================
-# in 2.7, there is no context manager for shelve :S
 @contextmanager
 def shelver(fn):
+    """
+    In python 2.7, there is no context manager for shelve. So this is it.
+    """
     db = shelve.open(fn)
     yield db
     db.close()
@@ -142,11 +143,29 @@ class RequestDatabase(object):
             db[self._db_key] = self
 
     @staticmethod
-    def load(fn=DATABASE_PATH, db_key=DATABASE_KEY):
+    def load(fn=DATABASE_PATH, db_key=DATABASE_KEY,
+             creator=lambda fn: RequestDatabase(db_path=fn)):
+        """
+        Load the database from the shelve `fn`.
+
+        Args:
+            fn (str): Path to the database file. Default
+                      :attr:`.DATABASE_PATH`.
+            db_key (str): What database key to use. Default
+                   :attr:`.DATABASE_KEY`.
+            creator (fn reference): Reference to the function, which will
+                    create new :class:`.RequestDatabase` if the old is not
+                    found. Default lambda, which expects `fn` parameter
+                    ``lambda fn: ..``.
+
+        Returns:
+            obj: :class:`.RequestDatabase` instance from the `fn` or newly
+                 created.
+        """
         with shelver(fn) as db:
             obj = db.get(db_key, None)
 
         if obj:
             return obj
 
-        return RequestDatabase(db_path=fn)
+        return creator(fn)
