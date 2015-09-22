@@ -151,8 +151,16 @@ class RequestDatabase(object):
         Returns:
             unicode: XML.
         """
+        if not self._req_queue:
+            return xmltodict.unparse({"records": None}, pretty=True)
+
+        record_dicts = [
+            rec.to_dict_xml()
+            for rec in self._req_queue.values()
+        ]
+
         return xmltodict.unparse(
-            {"records": self._req_queue if self._req_queue else None},
+            {"records": record_dicts},
             pretty=True
         )
 
