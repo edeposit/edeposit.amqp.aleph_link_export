@@ -32,6 +32,7 @@ def send_responses(send_back):
     if len(responses) == 1:
         return responses[0]
 
+    # > 1
     for resp in responses[:-1]:
         send_back(resp)
 
