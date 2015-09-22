@@ -33,10 +33,10 @@ import os.path
 
 #: Path to the dir with zeo.conf and zeo_client.conf.
 _BASE_PATH = "/home/aleph_export"
-REQUEST_DIR = os.path.join(_BASE_PATH, "edep2aleph")
-RESPONSE_DIR = os.path.join(_BASE_PATH, "aleph2edep")
-DATABASE_PATH = os.path.join(_BASE_PATH, "request_datase.shelve")
-LOG_PATH = os.path.join(_BASE_PATH, "link_export.log")  #: Path to the log.
+REQUEST_FN = os.path.join(_BASE_PATH, "edep2aleph/requests.xml")
+RESPONSE_FN = os.path.join(_BASE_PATH, "aleph2edep/responses.xml")
+DATABASE_FN = os.path.join(_BASE_PATH, "request_datase.shelve")
+LOG_FN = os.path.join(_BASE_PATH, "link_export.log")  #: Path to the log.
 
 DATABASE_KEY = "request_database"
 

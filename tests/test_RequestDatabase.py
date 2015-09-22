@@ -33,10 +33,10 @@ def teardown_module(module):
 @pytest.fixture
 def request_database():
     return RequestDatabase(
-        req_path=os.path.join(TMP_DIR, "requests.xml"),
-        resp_path=os.path.join(TMP_DIR, "responses.xml"),
-        log_path=os.path.join(TMP_DIR, "log.txt"),
-        db_path=os.path.join(TMP_DIR, "database.shelve"),
+        req_fn=os.path.join(TMP_DIR, "requests.xml"),
+        resp_fn=os.path.join(TMP_DIR, "responses.xml"),
+        log_fn=os.path.join(TMP_DIR, "log.txt"),
+        db_fn=os.path.join(TMP_DIR, "database.shelve"),
     )
 
 
@@ -47,13 +47,13 @@ def test_RequestDatabase_init():
 
 def test_request_database_fixture(request_database):
     assert os.path.exists(
-        os.path.dirname(request_database.db_path)
+        os.path.dirname(request_database.db_fn)
     )
 
     request_database.save()
 
-    assert os.path.exists(request_database.db_path)
-    assert "<records>" in open(request_database.req_path).read()
+    assert os.path.exists(request_database.db_fn)
+    assert "<records>" in open(request_database.req_fn).read()
 
     assert not request_database.get_responses()
 
@@ -62,7 +62,7 @@ def test_save(request_database, link_update_req):
     request_database.add_request(link_update_req)
 
     request_database.save()
-    with open(request_database.log_path) as f:
+    with open(request_database.log_fn) as f:
         msg = "Received request session_id(%s)" % link_update_req.session_id
         assert msg in f.read()
 
@@ -129,9 +129,9 @@ def test_get_multiple_responses(request_database):
 def test_load_database(request_database, link_update_req):
     request_database.add_request(link_update_req)
 
-    rd = RequestDatabase.load(fn=request_database.db_path)
+    rd = RequestDatabase.load(fn=request_database.db_fn)
     assert rd
-    assert rd.req_path == request_database.req_path
+    assert rd.req_fn == request_database.req_fn
     assert rd._req_queue == request_database._req_queue
     assert rd._resp_queue == request_database._resp_queue
 

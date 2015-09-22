@@ -10,11 +10,11 @@ from contextlib import contextmanager
 
 import xmltodict
 
-from settings import LOG_PATH
-from settings import REQUEST_DIR
-from settings import RESPONSE_DIR
+from settings import LOG_FN
+from settings import REQUEST_FN
+from settings import RESPONSE_FN
 from settings import DATABASE_KEY
-from settings import DATABASE_PATH
+from settings import DATABASE_FN
 
 from structures import LinkUpdateResponse
 
@@ -31,13 +31,16 @@ def shelver(fn):
 
 
 class RequestDatabase(object):
-    def __init__(self, req_path=REQUEST_DIR, resp_path=RESPONSE_DIR,
-                 log_path=LOG_PATH, db_path=DATABASE_PATH,
-                 db_key=DATABASE_KEY):
-        self.db_path = db_path
-        self.log_path = log_path
-        self.req_path = req_path
-        self.resp_path = resp_path
+    """
+    Keep the track of requests and resposes and their serialization and
+    deserialization from/to XMl.
+    """
+    def __init__(self, req_fn=REQUEST_FN, resp_fn=RESPONSE_FN, log_fn=LOG_FN,
+                 db_fn=DATABASE_FN, db_key=DATABASE_KEY):
+        self.db_fn = db_fn
+        self.log_fn = log_fn
+        self.req_fn = req_fn
+        self.resp_fn = resp_fn
 
         self._db_key = db_key
 
@@ -54,7 +57,7 @@ class RequestDatabase(object):
         """
         msg = msg.strip() + "\n"
 
-        with open(self.log_path, "a") as f:
+        with open(self.log_fn, "a") as f:
             f.write(msg)
 
     def add_request(self, request):
@@ -90,17 +93,17 @@ class RequestDatabase(object):
 
     def _process_responses(self):
         """
-        Go thru response XML (:attr:`.resp_path`) and put them all in the
+        Go thru response XML (:attr:`.resp_fn`) and put them all in the
         response queue using :meth:`_add_response`.
         """
-        if not os.path.exists(self.resp_path):
+        if not os.path.exists(self.resp_fn):
             self.log(
                 "._process_responses() called, "
-                "but '%s' doesn't exists!" % self.resp_path
+                "but '%s' doesn't exists!" % self.resp_fn
             )
             return
 
-        with open(self.resp_path) as resp_f:
+        with open(self.resp_fn) as resp_f:
             xml = resp_f.read()
 
         xdom = xmltodict.parse(xml)
@@ -158,22 +161,22 @@ class RequestDatabase(object):
         Read the response XML, process it, save the database and request XML.
         """
         # write request XML
-        with open(self.req_path, "w") as req_f:
+        with open(self.req_fn, "w") as req_f:
             req_f.write(self.to_xml())
 
         # save this object to database
-        with shelver(self.db_path) as db:
+        with shelver(self.db_fn) as db:
             db[self._db_key] = self
 
     @staticmethod
-    def load(fn=DATABASE_PATH, db_key=DATABASE_KEY,
-             creator=lambda fn: RequestDatabase(db_path=fn)):
+    def load(fn=DATABASE_FN, db_key=DATABASE_KEY,
+             creator=lambda fn: RequestDatabase(db_fn=fn)):
         """
         Load the database from the shelve `fn`.
 
         Args:
             fn (str): Path to the database file. Default
-                      :attr:`.DATABASE_PATH`.
+                      :attr:`.DATABASE_FN`.
             db_key (str): What database key to use. Default
                    :attr:`.DATABASE_KEY`.
             creator (fn reference): Reference to the function, which will
