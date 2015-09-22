@@ -17,6 +17,27 @@ from structures.test_requests import link_update_req
 
 # Variables ===================================================================
 TMP_DIR = None
+RESPONSE_STR = """<?xml version="1.0" encoding="UTF-8"?>
+
+<results>
+    <result session_id="session_id">
+        <status>OK</status>
+    </result>
+</results>"""
+
+THREE_RESPONSES_STR = """<?xml version="1.0" encoding="UTF-8"?>
+
+<results>
+    <result session_id="aaa">
+        <status>OK</status>
+    </result>
+    <result session_id="bbb">
+        <status>OK</status>
+    </result>
+    <result session_id="ccc">
+        <status>ERROR</status>
+    </result>
+</results>"""
 
 
 # Setup =======================================================================
@@ -78,45 +99,23 @@ def test_get_responses(request_database, link_update_req):
     request_database.add_request(link_update_req)
 
     with open(os.path.join(TMP_DIR, "responses.xml"), "w") as f:
-        f.write(
-            """<?xml version="1.0" encoding="UTF-8"?>
+        f.write(RESPONSE_STR)
 
-<results>
-    <result session_id="%s">
-        <status>OK</status>
-    </result>
-</results>""" % link_update_req.session_id
-        )
-
-    assert link_update_req.session_id in request_database._req_queue
+    assert "session_id" in request_database._req_queue
     resp = request_database.get_responses()
 
     assert resp
     assert len(resp) == 1
 
-    assert resp[0].session_id == link_update_req.session_id
+    assert resp[0].session_id == "session_id"
     assert resp[0].status == "OK"
 
-    assert link_update_req.session_id not in request_database._req_queue
+    assert "session_id" not in request_database._req_queue
 
 
 def test_get_multiple_responses(request_database):
     with open(os.path.join(TMP_DIR, "responses.xml"), "w") as f:
-        f.write(
-            """<?xml version="1.0" encoding="UTF-8"?>
-
-<results>
-    <result session_id="aaa">
-        <status>OK</status>
-    </result>
-    <result session_id="bbb">
-        <status>OK</status>
-    </result>
-    <result session_id="ccc">
-        <status>ERROR</status>
-    </result>
-</results>"""
-        )
+        f.write(THREE_RESPONSES_STR)
 
     resp = request_database.get_responses()
 
