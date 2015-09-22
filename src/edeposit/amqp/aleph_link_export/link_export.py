@@ -4,19 +4,41 @@
 # Interpreter version: python 2.7
 #
 # Imports =====================================================================
+from settings import LOG_FN
+from settings import REQUEST_FN
+from settings import RESPONSE_FN
+from settings import DATABASE_KEY
+from settings import DATABASE_FN
+
 from request_database import RequestDatabase
 
 
 # Variables ===================================================================
+REQUEST_DATABASE = RequestDatabase(
+    req_fn=REQUEST_FN,
+    resp_fn=RESPONSE_FN,
+    log_fn=LOG_FN,
+    db_fn=DATABASE_FN,
+    db_key=DATABASE_KEY,
+)
+
+
 # Functions & classes =========================================================
 def export(request):
-    pass
+    """
+    Save the export `request` to the database.
+
+    Args:
+        request (obj): Instance of :class:`.LinkUpdateRequest`.
+    """
+    REQUEST_DATABASE.add_request(request)
 
 
 def collect_responses():
-    pass
+    """
+    Collect processed resposes.
 
-
-if __name__ == '__main__':
-    rd = RequestDatabase()
-    print rd.to_xml()
+    Returns:
+        list: List of :class:`.LinkUpdateResponse` objects.
+    """
+    return REQUEST_DATABASE.get_responses()
