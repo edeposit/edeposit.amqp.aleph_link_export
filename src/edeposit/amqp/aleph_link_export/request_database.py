@@ -75,6 +75,12 @@ class RequestDatabase(object):
         )
 
     def _add_response(self, response):
+        """
+        Add responese from XML to the internal queue.
+
+        Args:
+            response (obj): :class:`.LinkUpdateResponse` object.
+        """
         self._resp_queue.append(response)
 
         if response.session_id in self._req_queue:
@@ -83,6 +89,10 @@ class RequestDatabase(object):
         self.log("Received response session_id(%s)." % response.session_id)
 
     def _process_responses(self):
+        """
+        Go thru response XML (:attr:`.resp_path`) and put them all in the
+        response queue using :meth:`_add_response`.
+        """
         if not os.path.exists(self.resp_path):
             self.log(
                 "._process_responses() called, "
@@ -107,6 +117,13 @@ class RequestDatabase(object):
             self._add_response(LinkUpdateResponse(**result))
 
     def get_responses(self):
+        """
+        Process response queue, remove finished requests from request queue,
+        return list of response objects.
+
+        Returns:
+            list: List of :class:`.LinkUpdateResponse` objects.
+        """
         self._process_responses()
 
         session_ids = ", ".join(
@@ -125,6 +142,12 @@ class RequestDatabase(object):
         return responses
 
     def to_xml(self):
+        """
+        Convert :attr:`_req_queue` to XML as defined in request XSD.
+
+        Returns:
+            unicode: XML.
+        """
         return xmltodict.unparse(
             {"records": self._req_queue if self._req_queue else None},
             pretty=True
