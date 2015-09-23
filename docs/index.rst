@@ -1,6 +1,7 @@
 edeposit.amqp.aleph_link_export
 ===============================
 
+Two-way communication system used to deliver update requests from E-deposit_ to Aleph used in Czech National library. Updates may contain new http links to other systems or identifiers, like URN:NBN, or UUID.
 
 .. _AMQP: https://www.amqp.org/
 .. _bottle.py: http://bottlepy.org
@@ -18,41 +19,27 @@ File relations
 API
 +++
 
-:doc:`/api/storage`:
+:doc:`/api/aleph_link_export`:
 
 .. toctree::
     :maxdepth: 1
 
-    /api/archive_storage.rst
-    /api/publication_storage.rst
+    /api/link_export.rst
+    /api/request_database.rst
 
 .. toctree::
     :maxdepth: 1
 
-    /api/api.rst
-    /api/storage_handler.rst
-    /api/web_tools.rst
-    /api/zconf.rst
     /api/settings.rst
 
-:doc:`/api/structures/structures`
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-AMQP:
+:doc:`/api/structures/structures`:
 
 .. toctree::
     :maxdepth: 1
 
-
-
-
-
-Database:
-
-.. toctree::
-    :maxdepth: 1
-
-
+    /api/structures/requests.rst
+    /api/structures/responses.rst
 
 
 Installation
@@ -91,13 +78,13 @@ If you have any trouble, just add ``--pdb`` switch at the end of your ``run_test
 
 Requirements
 ^^^^^^^^^^^^
-This script expects that packages pytest_, fake-factory_ and sh_ is installed. In case you don't have it yet, it can be easily installed using following command::
+This script expects that package pytest_ is installed. In case you don't have it yet, it can be easily installed using following command::
 
-    pip install --user pytest fake-factory sh
+    pip install --user pytest
 
 or for all users::
 
-    sudo pip install pytest fake-factory sh
+    sudo pip install pytest
 
 .. _pytest: http://pytest.org/
 .. _fake-factory: https://github.com/joke2k/faker
@@ -107,6 +94,21 @@ or for all users::
 Example
 ^^^^^^^
 
+::
+
+    $ ./run_tests.sh 
+    ============================= test session starts ==============================
+    platform linux2 -- Python 2.7.6 -- py-1.4.30 -- pytest-2.7.2
+    rootdir: /home/bystrousak/Plocha/Dropbox/c0d3z/prace/edeposit.amqp.aleph_link_export, inifile: 
+    plugins: cov
+    collected 17 items 
+
+    tests/test_RequestDatabase.py .......
+    tests/test_amqp_chain.py ....
+    tests/structures/test_requests.py .....
+    tests/structures/test_responses.py .
+
+    ========================== 17 passed in 0.25 seconds ===========================
 
 
 Indices and tables
