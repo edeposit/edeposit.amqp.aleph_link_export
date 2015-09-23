@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.0.0
+-----
+    - Added documentation.
+    - Fixed bugs.
+    - Added description.
+
 0.3.0
 -----
     - Added almost 100% test coverage (everything with meaning is covered).
