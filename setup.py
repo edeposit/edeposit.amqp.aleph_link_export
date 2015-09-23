@@ -42,11 +42,6 @@ setup(
     package_dir={'': 'src'},
     namespace_packages=['edeposit', 'edeposit.amqp'],
 
-    # scripts=[
-    #     'bin/edeposit_storage_runzeo.sh',
-    #     'bin/edeposit_storage_server.py',
-    # ],
-
     zip_safe=False,
     include_package_data=True,
     install_requires=open("requirements.txt").read().splitlines(),
@@ -56,7 +51,6 @@ setup(
     extras_require={
         "test": [
             "pytest",
-            "fake-factory"
         ],
         "docs": [
             "sphinx",
