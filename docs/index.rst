@@ -42,8 +42,7 @@ API
     /api/structures/responses.rst
 
 
-Installation
-------------
+:doc:`/notes/protocol_notes`
 
 
 AMQP protocol
@@ -51,13 +50,23 @@ AMQP protocol
 
 Here is the list of ``Request -> Response`` pairs describing responses to AMQP communication::
 
-TODO:
+    LinkUpdateRequest ---> 0-N × LinkUpdateResponse
+    StatusRequest -------> 0-N × LinkUpdateResponse
 
-    SaveRequest.Archive -> Archive
-    SaveRequest.Publication -> Publication
+Protocol is really simple - you can send the :class:`.LinkUpdateRequest` and
+you will get back all waiting :class:`.LinkUpdateResponse` responses. If there is none, you won't get any.
 
-    SearchRequest -> SearchResult
+You can also trigger the lookup for waiting responses by sending periodic :class:`.StatusRequest` messages.
 
+
+Installation
+------------
+Module is `hosted at PYPI <https://pypi.python.org/pypi/edeposit.amqp.aleph_link_export>`_,
+and can be easily installed using `PIP`_::
+
+    sudo pip install edeposit.amqp.aleph_link_export
+
+.. _PIP: http://en.wikipedia.org/wiki/Pip_%28package_manager%29
 
 Source code
 +++++++++++
