@@ -16,7 +16,7 @@ File relations
 ++++++++++++++
 
 .. image:: /_static/relations.png
-    :width: 400px
+
 
 API
 +++

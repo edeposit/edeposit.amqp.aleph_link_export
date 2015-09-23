@@ -1,0 +1,74 @@
+package edeposit.amqp.storage {
+    package structures {
+        class struct_init as "_​_init__.py" <<M, Green>> {
+            Imports all structures to be
+            accessible at package level.
+            ---
+            class StatusRequest
+            class LinkUpdateRequest
+            class LinkUpdateResponse
+        }
+        class requests as "requests.py" <<M, Green>> {
+            Request stuctures for use
+            in AMQP communication.
+            ---
+            class LinkUpdateRequest
+            class StatusRequest
+        }
+        class responses as "responses.py" <<M, Green>> {
+            Response stuctures for use
+            in AMQP communication.
+            ---
+            class LinkUpdateResponse
+        }
+    }
+    requests -d-> struct_init
+    responses -d-> struct_init
+
+    class init as "_​_init__.py" <<M, Green>> {
+        AMQP connector.
+
+        Also all communication structures are
+        imported here.
+        ---
+        class StatusRequest
+        class LinkUpdateRequest
+        class LinkUpdateResponse
+
+            reactToAMQPMessage(message, send_back)
+    }
+    class link_export as "link_export.py" <<M, Green>> {
+        API wrapper over
+        RequesDatabase.
+        ---
+        export(request)
+        collect_responses()
+    }
+    class request_database as "request_database.py" <<M, Green>> {
+        Shelve database used
+        to keep track about
+        sent/received records.
+        ---
+        shelver(fn)
+        class RequestDatabase
+    }
+    class settings as "settings.py" <<M, Green>> {
+        Settings for the package - web
+        address and so on.
+        ---
+        .REQUEST_FN
+        .RESPONSE_FN
+        .DATABASE_FN
+        .LOG_FN
+        .DATABASE_KEY
+    }
+    struct_init -d-> init
+    struct_init -l-> request_database
+
+    settings -r> request_database
+    settings -d-> init
+
+    request_database -d-> link_export: wraps
+
+    link_export -d-> init
+}

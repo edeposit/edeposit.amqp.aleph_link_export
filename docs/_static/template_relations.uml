@@ -1,0 +1,72 @@
+package edeposit.amqp.storage {
+    package structures {
+        class struct_init as "_​_init__.py" <<M, Green>> {
+            Imports all structures to be
+            accessible at package level.
+            ---
+            class StatusRequest
+            class LinkUpdateRequest
+            class LinkUpdateResponse
+            $templater:module:structures/__init__
+        }
+        class requests as "requests.py" <<M, Green>> {
+            Request stuctures for use
+            in AMQP communication.
+            ---
+            $templater:module:structures/requests
+        }
+        class responses as "responses.py" <<M, Green>> {
+            Response stuctures for use
+            in AMQP communication.
+            ---
+            $templater:module:structures/responses
+        }
+    }
+    requests -d-> struct_init
+    responses -d-> struct_init
+
+    class init as "_​_init__.py" <<M, Green>> {
+        AMQP connector.
+
+        Also all communication structures are
+        imported here.
+        ---
+        class StatusRequest
+        class LinkUpdateRequest
+        class LinkUpdateResponse
+
+        $templater:module:__init__
+    }
+    class link_export as "link_export.py" <<M, Green>> {
+        API wrapper over
+        RequesDatabase.
+        ---
+        $templater:module:link_export
+    }
+    class request_database as "request_database.py" <<M, Green>> {
+        Shelve database used
+        to keep track about
+        sent/received records.
+        ---
+        $templater:module:request_database
+    }
+    class settings as "settings.py" <<M, Green>> {
+        Settings for the package - web
+        address and so on.
+        ---
+        .REQUEST_FN
+        .RESPONSE_FN
+        .DATABASE_FN
+        .LOG_FN
+        .DATABASE_KEY
+    }
+    struct_init -d-> init
+    struct_init -l-> request_database
+
+    settings -r> request_database
+    settings -d-> init
+
+    request_database -d-> link_export: wraps
+
+    link_export -d-> init
+}
