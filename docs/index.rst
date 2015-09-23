@@ -70,6 +70,20 @@ and can be easily installed using `PIP`_::
 
 .. _PIP: http://en.wikipedia.org/wiki/Pip_%28package_manager%29
 
+Don't forget to add proper paths into your configuration file (see :mod:`.settings` for details) in ``/home/edeposit/aleph_export.json`` or ``/etc/edeposit/aleph_export.json``.
+
+Example::
+
+    {
+            "REQUEST_FN": "/home/aleph_export/edep2aleph.xml",
+            "RESPONSE_FN": "/home/aleph_export/aleph2edep.xml",
+            "DATABASE_FN": "/home/aleph_export/database.shelve",
+            "LOG_FN": "/home/aleph_export/log.txt"
+    }
+
+Warning:
+    The directories have to be created before you try to run the project!
+
 Source code
 +++++++++++
 Project is released under the MIT license. Source code can be found at GitHub:
