@@ -17,7 +17,7 @@ Note:
 Example of the configuration file (``$HOME/edeposit/aleph_export.json``)::
 
     {
-        "OUTPUT_DIR": "username"
+        "REQUEST_FN": "/home/whatever/req.xml"
     }
 
 Attributes
