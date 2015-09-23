@@ -1,24 +1,22 @@
-aleph_link_export package
-=========================
+aleph_link_export
+=================
 
 .. automodule:: aleph_link_export
     :members:
     :undoc-members:
     :show-inheritance:
 
-Subpackages
------------
-
-.. toctree::
-
-    aleph_link_export.structures
-
 Submodules
 ----------
 
 .. toctree::
+    :maxdepth: 1
 
-   aleph_link_export.link_export
-   aleph_link_export.request_database
-   aleph_link_export.settings
+    link_export
+    request_database
+    settings
 
+.. toctree::
+    :maxdepth: 1
+
+    structures/structures
