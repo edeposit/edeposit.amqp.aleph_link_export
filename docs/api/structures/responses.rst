@@ -1,5 +1,5 @@
-aleph_link_export.structures.responses module
-=============================================
+Response structures
+===================
 
 .. automodule:: aleph_link_export.structures.responses
     :members:

@@ -1,16 +1,13 @@
-aleph_link_export.structures package
-====================================
+AMQP structures
+===============
 
 .. automodule:: aleph_link_export.structures
     :members:
     :undoc-members:
     :show-inheritance:
 
-Submodules
-----------
-
 .. toctree::
 
-   aleph_link_export.structures.requests
-   aleph_link_export.structures.responses
+   requests
+   responses
 

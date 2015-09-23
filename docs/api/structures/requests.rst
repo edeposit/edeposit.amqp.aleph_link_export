@@ -1,5 +1,5 @@
-aleph_link_export.structures.requests module
-============================================
+Request structures
+==================
 
 .. automodule:: aleph_link_export.structures.requests
     :members:
