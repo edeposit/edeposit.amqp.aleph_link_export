@@ -33,17 +33,27 @@ import os.path
 
 #: Path to the dir with zeo.conf and zeo_client.conf.
 _BASE_PATH = "/home/aleph_export"
-REQUEST_FN = os.path.join(_BASE_PATH, "edep2aleph/requests.xml")
-RESPONSE_FN = os.path.join(_BASE_PATH, "aleph2edep/responses.xml")
-DATABASE_FN = os.path.join(_BASE_PATH, "request_datase.shelve")
-LOG_FN = os.path.join(_BASE_PATH, "link_export.log")  #: Path to the log.
 
+#: Path to the XML file, where the requests will be stored.
+REQUEST_FN = os.path.join(_BASE_PATH, "edep2aleph/requests.xml")
+
+#: Path to the file, where the Aleph will put the XML responses.
+RESPONSE_FN = os.path.join(_BASE_PATH, "aleph2edep/responses.xml")
+
+#: Path to the internal database file, which is used to store records before
+#: they are serialized to XML.
+DATABASE_FN = os.path.join(_BASE_PATH, "request_datase.shelve")  #:
+
+#: Path to the file, where the logs will be stored.
+LOG_FN = os.path.join(_BASE_PATH, "link_export.log")
+
+#: Don't change this! Key for the database.
 DATABASE_KEY = "request_database"
 
 
 # User configuration reader (don't edit this) =================================
 _ALLOWED = [str, unicode, int, float, long, bool]  #: Allowed types.
-_SETTINGS_PATH = "edeposit/aleph_export.json"
+_SETTINGS_PATH = "edeposit/aleph_export.json"  #: Path to the file.
 
 
 def _get_all_constants():

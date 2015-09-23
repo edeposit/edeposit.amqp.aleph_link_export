@@ -1,5 +1,5 @@
-aleph_link_export.settings module
-=================================
+settings submodule
+==================
 
 .. automodule:: aleph_link_export.settings
     :members:
