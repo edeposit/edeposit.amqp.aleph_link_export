@@ -3,6 +3,8 @@ edeposit.amqp.aleph_link_export
 
 Two-way communication system used to deliver update requests from E-deposit_ to Aleph used in Czech National library. Updates may contain new http links to other systems or identifiers, like URN:NBN, or UUID.
 
+Links created in Aleph cannot be changed automatically by direct-manipulation, so this project defines AMQP_ to XML protocol bridge. XML then copied over SCP to Aleph, processed and resulting XML response is then translated back to AMQP messages received by E-deposit.
+
 .. _AMQP: https://www.amqp.org/
 .. _bottle.py: http://bottlepy.org
 .. _E-deposit: http://edeposit.nkp.cz/
