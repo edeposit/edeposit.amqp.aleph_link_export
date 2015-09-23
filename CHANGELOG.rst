@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.0.1
+-----
+    - Small change in docs config.
+
 1.0.0
 -----
     - Added documentation.
