@@ -19,7 +19,7 @@ def _instanceof(instance, cls):
     return type(instance).__name__ == cls.__name__
 
 
-def send_responses(send_back):
+def _send_responses(send_back):
     """
     Send back all reponses, return the last (returned things are automatically
     sent back).
@@ -55,7 +55,7 @@ def reactToAMQPMessage(message, send_back):
                   string or whatever would be normally returned.
 
     Returns:
-        object: Response class from :mod:`structures`.
+        object: Response class from :mod:`.structures`.
 
     Raises:
         ValueError: if bad type of `message` structure is given.
@@ -63,9 +63,9 @@ def reactToAMQPMessage(message, send_back):
     if _instanceof(message, LinkUpdateRequest):
         link_export.export(message)
 
-        return send_responses(send_back)
+        return _send_responses(send_back)
 
     elif _instanceof(message, StatusRequest):
-        return send_responses(send_back)
+        return _send_responses(send_back)
 
     raise ValueError("'%s' is unknown type of request!" % str(type(message)))
