@@ -61,6 +61,7 @@ package edeposit.amqp.storage {
         .DATABASE_FN
         .LOG_FN
         .DATABASE_KEY
+        .EXPORT_XSD_LINK
     }
     struct_init -d-> init
     struct_init -l-> request_database

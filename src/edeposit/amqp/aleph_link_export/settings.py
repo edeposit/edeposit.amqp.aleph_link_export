@@ -50,6 +50,9 @@ LOG_FN = os.path.join(_BASE_PATH, "link_export.log")
 #: Don't change this! Key for the database.
 DATABASE_KEY = "request_database"
 
+#: Link to the export XSD
+EXPORT_XSD_LINK = "http://edeposit-aplikace.nkp.cz/link_export_notification.xsd"
+
 
 # User configuration reader (don't edit this) =================================
 _ALLOWED = [str, unicode, int, float, long, bool]  #: Allowed types.
