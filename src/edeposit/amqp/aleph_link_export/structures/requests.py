@@ -52,21 +52,19 @@ class LinkUpdateRequest(namedtuple("LinkUpdateRequest", ["uuid",
             OrderedDict: Itself as ordered dicts.
         """
         record = odict[
-            "record": odict[
-                "@session_id": self.session_id,
-                "uuid": self.uuid,
-                "doc_number": self.doc_number,
-                "urn_nbn": self.urn_nbn,
-                "kramerius_url": self.kramerius_url,
-                "document_url": self.document_url,
-            ]
+            "@session_id": self.session_id,
+            "uuid": self.uuid,
+            "doc_number": self.doc_number,
+            "urn_nbn": self.urn_nbn,
+            "kramerius_url": self.kramerius_url,
+            "document_url": self.document_url,
         ]
 
         if not self.kramerius_url:
-            del record["record"]["kramerius_url"]
+            del record["kramerius_url"]
 
         if not self.urn_nbn:
-            del record["record"]["urn_nbn"]
+            del record["urn_nbn"]
 
         return record
 

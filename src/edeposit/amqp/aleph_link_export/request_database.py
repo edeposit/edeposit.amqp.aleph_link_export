@@ -15,6 +15,7 @@ from settings import REQUEST_FN
 from settings import RESPONSE_FN
 from settings import DATABASE_KEY
 from settings import DATABASE_FN
+from settings import EXPORT_XSD_LINK
 
 from structures import LinkUpdateResponse
 
@@ -36,11 +37,13 @@ class RequestDatabase(object):
     deserialization from/to XMl.
     """
     def __init__(self, req_fn=REQUEST_FN, resp_fn=RESPONSE_FN, log_fn=LOG_FN,
-                 db_fn=DATABASE_FN, db_key=DATABASE_KEY):
+                 db_fn=DATABASE_FN, db_key=DATABASE_KEY,
+                 xsd_url=EXPORT_XSD_LINK):
         self.db_fn = db_fn  #: Path to the database file.
         self.log_fn = log_fn  #: Path to the log file.
         self.req_fn = req_fn  #: Path to the request XML.
-        self.resp_fn = resp_fn  #: Path to the response XML.
+        self.resp_fn = resp_fn  #: Path to the response XML
+        self.xsd_url = xsd_url
 
         self._db_key = db_key
 
@@ -160,7 +163,14 @@ class RequestDatabase(object):
         ]
 
         return xmltodict.unparse(
-            {"records": record_dicts},
+            {
+                "records": {
+                    "record": record_dicts,
+                    "@xmlns": "http://www.w3schools.com",
+                    "@xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+                    "@xsi:schemaLocation": self.xsd_url,
+                }
+            },
             pretty=True
         )
 

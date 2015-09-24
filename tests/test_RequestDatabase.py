@@ -90,7 +90,7 @@ def test_save(request_database, link_update_req):
     with open(request_database.req_fn) as f:
         data = f.read()
 
-    assert "<records>" in data
+    assert "<records x" in data
     sess = '<record session_id="%s">' % link_update_req.session_id
     assert sess in data
 

@@ -60,7 +60,7 @@ def test_export(link_update_req):
     with open(os.path.join(TMP_DIR, "requests.xml")) as f:
         data = f.read()
 
-    assert "<records>" in data
+    assert "<records x" in data
     sess = '<record session_id="%s">' % link_update_req.session_id
     assert sess in data
 

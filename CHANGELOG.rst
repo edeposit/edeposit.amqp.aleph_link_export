@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.0.2
+-----
+    - XSD added to XML output.
+
 1.0.1
 -----
     - Small change in docs config.
