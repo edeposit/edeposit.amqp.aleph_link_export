@@ -11,23 +11,8 @@ Z hlediska Alephu funguje vše tak, že se přes SCP připojí na ``edeposit-apl
 Ukázka
 ++++++
 
-::
-
-    <?xml version="1.0" encoding="UTF-8"?>
-    <records>
-        <record session_id="asd133">
-            <uuid>a0f177b4-d083-4175-8f5b-c2748367a4f6</uuid>
-            <doc_number>000054231</doc_number>
-            <document_url>http://edeposit-storage/UUID/a0f177b4-d083-4175-8f5b-c2748367a4f6</document_url>
-        </record>
-        <record session_id="asd2222">
-            <uuid>dd831a9d-a0d8-4537-b518-52b85e5c03a3</uuid>
-            <doc_number>000014375</doc_number>
-            <document_url>http://edeposit-storage/UUID/dd831a9d-a0d8-4537-b518-52b85e5c03a3</document_url>
-            <urnnbn>urn:nbn:cz:edep-000014375</urnnbn>
-        </record>
-    </records>
-
+.. include:: ../examples/request_example.xml
+   :literal:
 
 Odpověď
 -------
@@ -42,17 +27,8 @@ Soubor je vytvořen podle `schématu definovaného následujícím XSD <https://
 Ukázka
 ++++++
 
-::
-
-    <?xml version="1.0" encoding="UTF-8"?>
-    <results>
-        <result session_id="asd133">
-            <status>OK<status>
-        </result>
-        <result session_id="asd2222">
-            <status>ERROR<status>
-        </result>
-    </results>
+.. include:: ../examples/response_example.xml
+   :literal:
 
 Pozor, zde se nepoužívá **record**, ale **result**.
 
@@ -74,3 +50,10 @@ Workflow na straně Alephu by tedy mělo vypadat následovně:
 ------------
 
 Díky tomu, že všechny ``<record>`` tagy jsou po přijetí odpovědi E-depositem z vstupního XML automaticky odstraněny, není nutné používat vícero souborů. Výstupní XMl může být pokaždé přepsáno.
+
+XSD
+---
+XSD specifikace je zde a takto je také vkládána jako ``xsi:schemaLocation``:
+
+    - http://edeposit-aplikace.nkp.cz/link_export_result.xsd
+    - http://edeposit-aplikace.nkp.cz/link_export_notification.xsd
