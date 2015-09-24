@@ -166,9 +166,9 @@ class RequestDatabase(object):
             {
                 "records": {
                     "record": record_dicts,
-                    "@xmlns": "http://www.w3schools.com",
-                    "@xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
                     "@xsi:schemaLocation": self.xsd_url,
+                    "@xmlns": self.xsd_url.replace(".xsd", ""),
+                    "@xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
                 }
             },
             pretty=True

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<records xmlns="http://www.w3schools.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://edeposit-aplikace.nkp.cz/link_export_result.xsd">
+<results xsi:schemaLocation="http://edeposit-aplikace.nkp.cz/link_export_result.xsd" xmlns="http://edeposit-aplikace.nkp.cz/link_export_result" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <result session_id="asd133">
-        <status>OK<status>
+        <status>OK</status>
     </result>
     <result session_id="asd2222">
-        <status>ERROR<status>
+        <status>ERROR</status>
     </result>
 </results>

@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:element name="status">
-    <xs:simpleType>
-      <xs:restriction base="xs:string">
-        <xs:enumeration value="OK"></xs:enumeration>
-        <xs:enumeration value="ERROR"></xs:enumeration>
-      </xs:restriction>
-    </xs:simpleType>
-  </xs:element>
+<schema targetNamespace="http://edeposit-aplikace.nkp.cz/link_export_result" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://edeposit-aplikace.nkp.cz/link_export_result">
+  <simpleType name="Status">
+    <restriction base="string">
+      <enumeration value="OK"></enumeration>
+      <enumeration value="ERROR"></enumeration>
+    </restriction>
+  </simpleType>
 
-  <xs:element name="result">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="status" minOccurs="1" maxOccurs="1" />
-      </xs:sequence>
-      <xs:attribute type="xs:string" name="session_id" />
-    </xs:complexType>
-  </xs:element>
+  <complexType name="Result">
+    <sequence>
+      <element name="status" type="tns:Status" minOccurs="1" maxOccurs="1" />
+    </sequence>
+    <attribute type="string" name="session_id" />
+  </complexType>
 
-  <xs:element name="results">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="result" minOccurs="1" maxOccurs="unbounded" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-</xs:schema>
+  <complexType name="ResultsType">
+    <sequence>
+      <element name="result" type="tns:Result" minOccurs="0" maxOccurs="unbounded" />
+    </sequence>
+  </complexType>
+
+  <element name="results">
+    <complexType>
+      <complexContent>
+        <extension base="tns:ResultsType" />
+      </complexContent>
+    </complexType>
+  </element>
+</schema>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<records xmlns="http://www.w3schools.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://edeposit-aplikace.nkp.cz/link_export_notification.xsd">
+<records xsi:schemaLocation="http://edeposit-aplikace.nkp.cz/link_export_notification.xsd" xmlns="http://edeposit-aplikace.nkp.cz/link_export_notification" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <record session_id="asd133">
         <uuid>a0f177b4-d083-4175-8f5b-c2748367a4f6</uuid>
         <doc_number>000054231</doc_number>

@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.0.3
+-----
+    - Fixed XML mess.
+
 1.0.2
 -----
     - XSD added to XML output.

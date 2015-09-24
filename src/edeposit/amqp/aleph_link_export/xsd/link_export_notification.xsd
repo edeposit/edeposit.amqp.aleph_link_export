@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:element name="record">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="uuid" type="xs:string" minOccurs="1" maxOccurs="1" />
-        <xs:element name="doc_number" type="xs:string" minOccurs="1" maxOccurs="1" />
-        <xs:element name="document_url" type="xs:anyURI" minOccurs="1" maxOccurs="1" />
-        <xs:element name="urn_nbn" type="xs:anyURI" minOccurs="0" maxOccurs="1" />
-        <xs:element name="kramerius_url" type="xs:anyURI" minOccurs="0" maxOccurs="1" />
-      </xs:sequence>
-      <xs:attribute type="xs:string" name="session_id" />
-    </xs:complexType>
-  </xs:element>
+<schema targetNamespace="http://edeposit-aplikace.nkp.cz/link_export_notification" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://edeposit-aplikace.nkp.cz/link_export_notification">
 
-  <xs:element name="records">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="record" minOccurs="1" maxOccurs="unbounded" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-</xs:schema>
+  <complexType name="Record">
+    <sequence>
+      <element name="uuid" type="string" minOccurs="1" maxOccurs="1" />
+      <element name="doc_number" type="string" minOccurs="1" maxOccurs="1" />
+      <element name="document_url" type="anyURI" minOccurs="1" maxOccurs="1" />
+      <element name="urn_nbn" type="anyURI" minOccurs="0" maxOccurs="1" />
+      <element name="kramerius_url" type="anyURI" minOccurs="0" maxOccurs="1" />
+    </sequence>
+    <attribute type="string" name="session_id" />
+  </complexType>
+
+  <complexType name="RecordsType">
+    <sequence>
+      <element name="record" type="tns:Record" minOccurs="0" maxOccurs="unbounded" />
+    </sequence>
+  </complexType>
+
+  <element name="records">
+    <complexType>
+      <complexContent>
+        <extension base="tns:RecordsType" />
+      </complexContent>
+    </complexType>
+  </element>
+</schema>
