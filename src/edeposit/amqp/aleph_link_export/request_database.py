@@ -206,10 +206,13 @@ class RequestDatabase(object):
             obj: :class:`.RequestDatabase` instance from the `fn` or newly
                  created.
         """
+        if not os.path.exists(fn):
+            return creator(fn)
+
         with shelver(fn) as db:
             obj = db.get(db_key, None)
 
-        if obj:
-            return obj
+        if not obj:
+            return creator(fn)
 
-        return creator(fn)
+        return obj
