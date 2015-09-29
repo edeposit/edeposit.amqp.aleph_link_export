@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.1.0
+-----
+    - Implemented option to disable logging.
+
 1.0.5
 -----
     - Fixed behavior, which let the response file in the directory, so it was processed over and over again.

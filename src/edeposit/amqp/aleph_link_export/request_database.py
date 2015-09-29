@@ -16,6 +16,7 @@ from settings import RESPONSE_FN
 from settings import DATABASE_KEY
 from settings import DATABASE_FN
 from settings import EXPORT_XSD_LINK
+from settings import LOGGING_ENABLED
 
 from structures import LinkUpdateResponse
 
@@ -38,12 +39,13 @@ class RequestDatabase(object):
     """
     def __init__(self, req_fn=REQUEST_FN, resp_fn=RESPONSE_FN, log_fn=LOG_FN,
                  db_fn=DATABASE_FN, db_key=DATABASE_KEY,
-                 xsd_url=EXPORT_XSD_LINK):
+                 xsd_url=EXPORT_XSD_LINK, logging=LOGGING_ENABLED):
         self.db_fn = db_fn  #: Path to the database file.
         self.log_fn = log_fn  #: Path to the log file.
         self.req_fn = req_fn  #: Path to the request XML.
         self.resp_fn = resp_fn  #: Path to the response XML
         self.xsd_url = xsd_url
+        self.logging = logging
 
         self._db_key = db_key
 
@@ -58,8 +60,10 @@ class RequestDatabase(object):
         Args:
             msg (str): Message which should be logged.
         """
-        msg = msg.strip() + "\n"
+        if not self.logging:
+            return
 
+        msg = msg.strip() + "\n"
         with open(self.log_fn, "a") as f:
             f.write(msg)
 

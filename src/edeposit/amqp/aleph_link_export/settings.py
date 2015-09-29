@@ -53,6 +53,9 @@ DATABASE_KEY = "request_database"
 #: Link to the export XSD
 EXPORT_XSD_LINK = "http://edeposit-aplikace.nkp.cz/link_export_notification.xsd"
 
+#: Logging enabled or not?
+LOGGING_ENABLED = True
+
 
 # User configuration reader (don't edit this) =================================
 _ALLOWED = [str, unicode, int, float, long, bool]  #: Allowed types.
