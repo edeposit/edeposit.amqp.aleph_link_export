@@ -105,3 +105,10 @@ def test_one_link_status_request():
 
     assert resp.session_id == "session_id"
     assert resp.status == "OK"
+
+    # test that the queue was cleaned
+    DB = []
+    resp = reactToAMQPMessage(StatusRequest(), lambda x: DB.append(x))
+
+    assert not DB
+    assert not resp
