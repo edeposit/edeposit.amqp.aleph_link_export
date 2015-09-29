@@ -1,11 +1,11 @@
 Changelog
 =========
 
-1.0.4
+1.0.5
 -----
-    - Fixed problem with loading of the database after restart.
+    - Fixed behavior, which let the response file in the directory, so it was processed over and over again.
 
-1.0.0 - 1.0.3
+1.0.0 - 1.0.4
 -------------
     - Added documentation.
     - Fixed bugs.
@@ -13,6 +13,7 @@ Changelog
     - Small change in docs config.
     - XSD added to XML output.
     - Fixed XML mess.
+    - Fixed problem with loading of the database after restart.
 
 0.3.0
 -----

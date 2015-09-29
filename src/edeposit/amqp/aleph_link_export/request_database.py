@@ -71,6 +71,13 @@ class RequestDatabase(object):
             request (obj): Object with defined :attr:`session_id` property and
                     :meth:`to_xml_dict` method.
         """
+        if not (hasattr(request, "session_id") and
+                hasattr(request, "to_xml_dict")):
+            raise ValueError(
+                "Object must have .session_id property and .to_xml_dict() "
+                "method!"
+            )
+
         self._req_queue[request.session_id] = request
 
         self.log(
