@@ -102,7 +102,7 @@ class RequestDatabase(object):
         if not os.path.exists(self.resp_fn):
             self.log(
                 "._process_responses() called, "
-                "but '%s' doesn't exists!" % self.resp_fn
+                "but '%s' not found." % self.resp_fn
             )
             return
 
@@ -122,6 +122,11 @@ class RequestDatabase(object):
 
             self._add_response(LinkUpdateResponse(**result))
 
+        os.unlink(self.resp_fn)
+        self.log(
+            "Aleph response queue processed. Got %d responses." % len(results)
+        )
+
     def get_responses(self):
         """
         Process response queue, remove finished requests from request queue,
@@ -132,7 +137,7 @@ class RequestDatabase(object):
         """
         self._process_responses()
 
-        session_ids = ", ".join(
+        session_ids = ", ".join( 
             resp.session_id
             for resp in self._resp_queue
         )
