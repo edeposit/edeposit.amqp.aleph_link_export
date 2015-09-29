@@ -51,7 +51,18 @@ class RequestDatabase(object):
 
         self._req_queue = {}
         self._resp_queue = []
-        self._log = []
+
+    def from_obj(self, obj):
+        """
+        Load content of all properties from another :class:`RequestDatabase`
+        object.
+
+        Args:
+            obj (obj): :class:`RequestDatabase` instance.
+        """
+        for key in self.__dict__.keys():
+            if hasattr(obj, key):
+                self.__dict__[key] = getattr(obj, key)
 
     def log(self, msg):
         """

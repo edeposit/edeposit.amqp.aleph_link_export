@@ -9,6 +9,8 @@ from settings import REQUEST_FN
 from settings import RESPONSE_FN
 from settings import DATABASE_KEY
 from settings import DATABASE_FN
+from settings import EXPORT_XSD_LINK
+from settings import LOGGING_ENABLED
 
 from request_database import RequestDatabase
 
@@ -28,6 +30,12 @@ REQUEST_DATABASE = RequestDatabase.load(
     db_key=DATABASE_KEY,
     creator=get_rd,
 )
+REQUEST_DATABASE.xsd_url = EXPORT_XSD_LINK
+REQUEST_DATABASE.logging = LOGGING_ENABLED
+REQUEST_DATABASE.db_fn = DATABASE_FN
+REQUEST_DATABASE.log_fn = LOG_FN
+REQUEST_DATABASE.req_fn = REQUEST_FN
+REQUEST_DATABASE.resp_fn = RESPONSE_FN
 
 
 # Functions & classes =========================================================
