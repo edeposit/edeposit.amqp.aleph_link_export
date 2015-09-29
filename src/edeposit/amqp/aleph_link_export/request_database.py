@@ -69,12 +69,12 @@ class RequestDatabase(object):
 
         Args:
             request (obj): Object with defined :attr:`session_id` property and
-                    :meth:`to_xml_dict` method.
+                    :meth:`to_dict_xml` method.
         """
         if not (hasattr(request, "session_id") and
-                hasattr(request, "to_xml_dict")):
+                hasattr(request, "to_dict_xml")):
             raise ValueError(
-                "Object must have .session_id property and .to_xml_dict() "
+                "Object must have .session_id property and .to_dict_xml() "
                 "method!"
             )
 
