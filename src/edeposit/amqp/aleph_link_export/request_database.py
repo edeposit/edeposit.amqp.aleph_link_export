@@ -52,18 +52,6 @@ class RequestDatabase(object):
         self._req_queue = {}
         self._resp_queue = []
 
-    def from_obj(self, obj):
-        """
-        Load content of all properties from another :class:`RequestDatabase`
-        object.
-
-        Args:
-            obj (obj): :class:`RequestDatabase` instance.
-        """
-        for key in self.__dict__.keys():
-            if hasattr(obj, key):
-                self.__dict__[key] = getattr(obj, key)
-
     def log(self, msg):
         """
         Log the message to the log.
@@ -213,6 +201,27 @@ class RequestDatabase(object):
         with shelver(self.db_fn) as db:
             db[self._db_key] = self
 
+    def _from_obj(self, obj):
+        """
+        Load content of all properties from another :class:`RequestDatabase`
+        object.
+
+        Args:
+            obj (obj): :class:`RequestDatabase` instance.
+        """
+        for key in self.__dict__.keys():
+            if hasattr(obj, key):
+                self.__dict__[key] = getattr(obj, key)
+
+    def _update_self(self):
+        """
+        Update yourself to newest version of object in shelve.
+        """
+        if os.path.exists(self.db_fn):
+            with shelver(self.db_fn) as db:
+                self._from_obj(db[self._db_key])
+                db[self._db_key] = self
+
     @staticmethod
     def load(fn=DATABASE_FN, db_key=DATABASE_KEY,
              creator=lambda fn: RequestDatabase(db_fn=fn)):
@@ -242,4 +251,5 @@ class RequestDatabase(object):
         if not obj:
             return creator(fn)
 
+        obj._update_self()
         return obj

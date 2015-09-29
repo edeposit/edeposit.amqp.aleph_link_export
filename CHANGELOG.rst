@@ -1,11 +1,12 @@
 Changelog
 =========
 
-1.1.1
+1.1.2
 -----
+    - Added ability to update itself automatically.
 
-1.1.0
------
+1.1.0 - 1.1.1
+-------------
     - Implemented option to disable logging.
 
 1.0.0 - 1.0.5
