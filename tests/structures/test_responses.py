@@ -14,7 +14,9 @@ def test_LinkUpdateResponse():
     lur = LinkUpdateResponse(
         status="status",
         session_id="session_id",
+        reason="reason"
     )
 
     assert lur.status == "status"
     assert lur.session_id == "session_id"
+    assert lur.reason == "reason"

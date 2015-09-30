@@ -36,6 +36,7 @@ THREE_RESPONSES_STR = """<?xml version="1.0" encoding="UTF-8"?>
     </result>
     <result session_id="ccc">
         <status>ERROR</status>
+        <reason>There is reason!</reason>
     </result>
 </results>"""
 
@@ -124,12 +125,15 @@ def test_get_multiple_responses(request_database):
 
     assert resp[0].session_id == "aaa"
     assert resp[0].status == "OK"
+    assert not resp[0].reason
 
     assert resp[1].session_id == "bbb"
     assert resp[1].status == "OK"
+    assert not resp[1].reason
 
     assert resp[2].session_id == "ccc"
     assert resp[2].status == "ERROR"
+    assert resp[2].reason == "There is reason!"
 
 
 def test_load_database(request_database, link_update_req):

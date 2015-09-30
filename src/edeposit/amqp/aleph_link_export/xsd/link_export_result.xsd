@@ -10,6 +10,7 @@
   <complexType name="Result">
     <sequence>
       <element name="status" type="tns:Status" minOccurs="1" maxOccurs="1" />
+      <element name="reason" type="anyURI" minOccurs="0" maxOccurs="1" />
     </sequence>
     <attribute type="string" name="session_id" />
   </complexType>

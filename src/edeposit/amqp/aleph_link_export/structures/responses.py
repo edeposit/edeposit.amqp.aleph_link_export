@@ -9,7 +9,8 @@ from collections import namedtuple
 
 # Requests ====================================================================
 class LinkUpdateResponse(namedtuple("LinkUpdateResponse", ["status",
-                                                           "session_id"])):
+                                                           "session_id",
+                                                           "reason"])):
     """
     Response to the :class:`.LinkUpdateRequest` request.
 
@@ -20,4 +21,6 @@ class LinkUpdateResponse(namedtuple("LinkUpdateResponse", ["status",
         status (str): Status of the update request. Either ``OK``, or
                       ``ERROR``.
         session_id (str): Corresponding session id.
+        reason (str, default None): Optional reason why the request was 
+               rejected.
     """

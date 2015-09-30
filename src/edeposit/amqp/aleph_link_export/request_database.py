@@ -121,14 +121,19 @@ class RequestDatabase(object):
 
         xdom = xmltodict.parse(xml)
 
+        # parse XML
         results = xdom.get("results", {}).get("result", [])
         if type(results) not in [list, tuple]:
             results = [results]
 
+        # convert XML results to LinkUpdateResponse structure
         for result in results:
             # to allow ** creation of namedtuple
             result["session_id"] = result["@session_id"]
             del result["@session_id"]
+
+            # copy reason or set it to None
+            result["reason"] = result.get("reason", None)
 
             self._add_response(LinkUpdateResponse(**result))
 
