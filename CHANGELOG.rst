@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.1.4
+-----
+    - Added new parameter reason to output structure.
+
 1.1.3
 -----
     - ``None`` is now returned instead of blank array, when no response is ready.
