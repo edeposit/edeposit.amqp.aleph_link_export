@@ -43,15 +43,6 @@ def teardown_module(module):
     shutil.rmtree(TMP_DIR)
 
 
-# Fixtures ====================================================================
-# @pytest.fixture
-# def fixture():
-#     pass
-
-# with pytest.raises(Exception):
-#     raise Exception()
-
-
 # Tests =======================================================================
 def test_export(link_update_req):
     aleph_link_export.link_export.export(link_update_req)
@@ -68,11 +59,11 @@ def test_export(link_update_req):
 def test_link_update_request(link_update_req):
     DB = []
 
-    assert reactToAMQPMessage(link_update_req, lambda x: DB.append(x)) == []
-    assert reactToAMQPMessage(link_update_req, lambda x: DB.append(x)) == []
+    assert reactToAMQPMessage(link_update_req, lambda x: DB.append(x)) is None
+    assert reactToAMQPMessage(link_update_req, lambda x: DB.append(x)) is None
 
     assert DB == []
-    assert reactToAMQPMessage(StatusRequest(), lambda x: DB.append(x)) == []
+    assert reactToAMQPMessage(StatusRequest(), lambda x: DB.append(x)) is None
 
 
 def test_link_status_request():

@@ -27,7 +27,7 @@ def _send_responses(send_back):
     responses = link_export.collect_responses()
 
     if not responses:
-        return []
+        return None
 
     if len(responses) == 1:
         return responses[0]

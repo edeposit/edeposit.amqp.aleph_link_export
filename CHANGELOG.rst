@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.1.3
+-----
+    - ``None`` is now returned instead of blank array, when no response is ready.
+
 1.1.2
 -----
     - Added ability to update itself automatically.
