@@ -5,5 +5,6 @@
     </result>
     <result session_id="asd2222">
         <status>ERROR</status>
+        <reason>Some reason.</reason>
     </result>
 </results>
