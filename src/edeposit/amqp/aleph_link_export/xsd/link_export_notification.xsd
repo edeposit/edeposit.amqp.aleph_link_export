@@ -5,8 +5,8 @@
     <sequence>
       <element name="uuid" type="string" minOccurs="1" maxOccurs="1" />
       <element name="doc_number" type="string" minOccurs="1" maxOccurs="1" />
-      <element name="document_url" type="anyURI" minOccurs="1" maxOccurs="1" />
-      <element name="urn_nbn" type="anyURI" minOccurs="0" maxOccurs="1" />
+      <element name="document_url" type="anyURI" minOccurs="1" maxOccurs="unbounded" />
+      <element name="urn_nbn" type="string" minOccurs="0" maxOccurs="1" />
       <element name="kramerius_url" type="anyURI" minOccurs="0" maxOccurs="1" />
     </sequence>
     <attribute type="string" name="session_id" />
