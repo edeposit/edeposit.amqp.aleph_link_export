@@ -62,7 +62,7 @@ class LinkUpdateRequest(namedtuple("LinkUpdateRequest", ["uuid",
             "doc_number": self.doc_number,
             "urn_nbn": self.urn_nbn,
             "kramerius_url": self.kramerius_url,
-            "document_urls": self.document_urls,
+            "document_url": self.document_urls,
         ]
 
         if not self.kramerius_url:

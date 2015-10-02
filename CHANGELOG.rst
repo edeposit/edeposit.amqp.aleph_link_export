@@ -1,21 +1,16 @@
 Changelog
 =========
 
-1.1.4
+1.2.0
 -----
-    - Added new parameter reason to output structure.
+    - document_url changed to list.
 
-1.1.3
------
-    - ``None`` is now returned instead of blank array, when no response is ready.
-
-1.1.2
------
-    - Added ability to update itself automatically.
-
-1.1.0 - 1.1.1
+1.1.0 - 1.1.4
 -------------
     - Implemented option to disable logging.
+    - Added ability to update itself automatically.
+    - ``None`` is now returned instead of blank array, when no response is ready.
+    - Added new parameter reason to output structure.
 
 1.0.0 - 1.0.5
 -------------

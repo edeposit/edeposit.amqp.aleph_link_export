@@ -10,6 +10,7 @@ import tempfile
 
 import pytest
 
+from aleph_link_export import LinkUpdateRequest
 from aleph_link_export.request_database import RequestDatabase
 
 from structures.test_requests import link_update_req
@@ -81,19 +82,37 @@ def test_request_database_fixture(request_database):
 
 
 def test_save(request_database, link_update_req):
-    request_database.add_request(link_update_req)
+    # copy.deepcopy() kinda fails at this - who know what the pytest do with
+    # fixtures..
+    luq = link_update_req._asdict()
+    luq["document_urls"] = luq["document_urls"][:]
+    luq = LinkUpdateRequest(**luq)
+
+    luq.document_urls.append("xe")
+
+    request_database.add_request(luq)
 
     request_database.save()
     with open(request_database.log_fn) as f:
-        msg = "Received request session_id(%s)" % link_update_req.session_id
+        msg = "Received request session_id(%s)" % luq.session_id
         assert msg in f.read()
 
     with open(request_database.req_fn) as f:
         data = f.read()
 
-    assert "<records x" in data
-    sess = '<record session_id="%s">' % link_update_req.session_id
-    assert sess in data
+    expected_out = """<?xml version="1.0" encoding="utf-8"?>
+<records xmlns="http://edeposit-aplikace.nkp.cz/link_export_notification" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://edeposit-aplikace.nkp.cz/link_export_notification.xsd">
+\t<record session_id="%s">
+\t\t<uuid>uuid</uuid>
+\t\t<doc_number>doc_number</doc_number>
+\t\t<urn_nbn>urn_nbn</urn_nbn>
+\t\t<kramerius_url>kramerius_url</kramerius_url>
+\t\t<document_url>document_urls</document_url>
+\t\t<document_url>xe</document_url>
+\t</record>
+</records>""" % luq.session_id
+
+    assert data == expected_out
 
 
 def test_get_responses(request_database, link_update_req):
@@ -138,6 +157,7 @@ def test_get_multiple_responses(request_database):
 
 def test_load_database(request_database, link_update_req):
     request_database.add_request(link_update_req)
+    request_database.save()
 
     rd = RequestDatabase.load(fn=request_database.db_fn)
     assert rd

@@ -62,7 +62,7 @@ def test_LinkUpdateRequest_to_dict_xml(link_update_req):
     assert xml_dict["doc_number"] == link_update_req.doc_number
     assert xml_dict["urn_nbn"] == link_update_req.urn_nbn
     assert xml_dict["kramerius_url"] == link_update_req.kramerius_url
-    assert xml_dict["document_urls"] == link_update_req.document_urls
+    assert xml_dict["document_url"] == link_update_req.document_urls
 
 
 def test_LinkUpdateRequest_to_dict_xml_without_kramerius_and_urn(link_update_req):
@@ -79,7 +79,7 @@ def test_LinkUpdateRequest_to_dict_xml_without_kramerius_and_urn(link_update_req
     assert xml_dict["doc_number"] == link_update_req.doc_number
     assert "kramerius_url" not in xml_dict
     assert "urn_nbn" not in xml_dict
-    assert xml_dict["document_urls"] == link_update_req.document_urls
+    assert xml_dict["document_url"] == link_update_req.document_urls
 
 
 def test_status_request(status_request):
