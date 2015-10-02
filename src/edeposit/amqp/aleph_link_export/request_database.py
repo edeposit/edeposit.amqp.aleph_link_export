@@ -206,8 +206,4 @@ class RequestDatabase(ShelveDatabase):
             obj: :class:`.RequestDatabase` instance from the `fn` or newly
                  created.
         """
-        return ShelveDatabase.load(
-            creator=creator,
-            fn=fn,
-            db_key=db_key
-        )
+        return ShelveDatabase.load(creator=creator, fn=fn, db_key=db_key)

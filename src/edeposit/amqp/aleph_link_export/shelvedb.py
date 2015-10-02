@@ -9,11 +9,6 @@ import shelve
 import os.path
 from contextlib import contextmanager
 
-from settings import LOG_FN
-from settings import DATABASE_FN
-from settings import DATABASE_KEY
-from settings import LOGGING_ENABLED
-
 
 # Functions & classes =========================================================
 @contextmanager
@@ -30,12 +25,11 @@ class ShelveDatabase(object):
     """
     Class that can save and load itself to shelve.
     """
-    def __init__(self, log_fn=LOG_FN, db_fn=DATABASE_FN, db_key=DATABASE_KEY,
-                 logging=LOGGING_ENABLED):
+    def __init__(self, log_fn, db_fn, db_key, logging):
         self.db_fn = db_fn  #: Path to the database file.
         self.log_fn = log_fn  #: Path to the log file.
-        self.logging = logging
-        self._db_key = db_key
+        self.logging = logging  #: Is the logging enabled?
+        self._db_key = db_key  #: Key used to load the object from shelve.
 
     def log(self, msg):
         """
@@ -82,19 +76,18 @@ class ShelveDatabase(object):
                 db[self._db_key] = self
 
     @staticmethod
-    def load(creator, fn=DATABASE_FN, db_key=DATABASE_KEY):
+    def load(fn, db_key, creator):
         """
         Load the database from the shelve `fn`.
 
         Args:
+            fn (str): Path to the database file.
+            db_key (str): What database key to use. Default
+                   :attr:`.DATABASE_KEY`.
             creator (reference): Reference to the function, which will
                     create new :class:`.RequestDatabase` if the old is not
                     found. Default lambda, which expects `fn` parameter
                     ``lambda fn: ..``.
-            fn (str): Path to the database file. Default
-                      :attr:`.DATABASE_FN`.
-            db_key (str): What database key to use. Default
-                   :attr:`.DATABASE_KEY`.
 
         Returns:
             obj: :class:`.RequestDatabase` instance from the `fn` or newly
