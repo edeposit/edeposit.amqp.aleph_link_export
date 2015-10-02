@@ -24,6 +24,8 @@ class LinkUpdateRequest(namedtuple("LinkUpdateRequest", ["uuid",
                    with :mod:`.responses`.
         uuid (str): UUID for the `doc_number` you wish to update.
         doc_number (str): Document number of the document you wish to update.
+                      If there is a summary aleph record for this document at Aleph
+                      please send a doc_number of this summary aleph record.
         document_urls (list): Newly added public URL to the storage / whatever
                      subsystem.
         kramerius_url (str, default None): Newly added URL to the Kramerius
