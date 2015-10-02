@@ -4,67 +4,49 @@
 # Interpreter version: python 2.7
 #
 # Imports =====================================================================
-import shelve
 import os.path
-from contextlib import contextmanager
 
 import xmltodict
 
 from settings import LOG_FN
 from settings import REQUEST_FN
 from settings import RESPONSE_FN
-from settings import DATABASE_KEY
 from settings import DATABASE_FN
+from settings import DATABASE_KEY
 from settings import EXPORT_XSD_LINK
 from settings import LOGGING_ENABLED
 
+from shelvedb import ShelveDatabase
 from structures import LinkUpdateResponse
 
 
-# Functions & classes =========================================================
-@contextmanager
-def shelver(fn):
-    """
-    In python 2.7, there is no context manager for shelve. So this is it.
-    """
-    db = shelve.open(fn)
-    yield db
-    db.close()
-
-
-class RequestDatabase(object):
+# Classes =====================================================================
+class RequestDatabase(ShelveDatabase):
     """
     Keep the track of requests and resposes and their serialization and
     deserialization from/to XMl.
     """
-    def __init__(self, req_fn=REQUEST_FN, resp_fn=RESPONSE_FN, log_fn=LOG_FN,
-                 db_fn=DATABASE_FN, db_key=DATABASE_KEY,
-                 xsd_url=EXPORT_XSD_LINK, logging=LOGGING_ENABLED):
-        self.db_fn = db_fn  #: Path to the database file.
-        self.log_fn = log_fn  #: Path to the log file.
+    def __init__(self,
+                 log_fn=LOG_FN,
+                 db_fn=DATABASE_FN,
+                 db_key=DATABASE_KEY,
+                 logging=LOGGING_ENABLED,
+                 req_fn=REQUEST_FN,
+                 resp_fn=RESPONSE_FN,
+                 xsd_url=EXPORT_XSD_LINK):
+        super(RequestDatabase, self).__init__(
+            log_fn=log_fn,
+            db_fn=db_fn,
+            db_key=db_key,
+            logging=logging,
+        )
+
         self.req_fn = req_fn  #: Path to the request XML.
         self.resp_fn = resp_fn  #: Path to the response XML
         self.xsd_url = xsd_url
-        self.logging = logging
-
-        self._db_key = db_key
 
         self._req_queue = {}
         self._resp_queue = []
-
-    def log(self, msg):
-        """
-        Log the message to the log.
-
-        Args:
-            msg (str): Message which should be logged.
-        """
-        if not self.logging:
-            return
-
-        msg = msg.strip() + "\n"
-        with open(self.log_fn, "a") as f:
-            f.write(msg)
 
     def add_request(self, request):
         """
@@ -152,7 +134,7 @@ class RequestDatabase(object):
         """
         self._process_responses()
 
-        session_ids = ", ".join( 
+        session_ids = ", ".join(
             resp.session_id
             for resp in self._resp_queue
         )
@@ -202,30 +184,7 @@ class RequestDatabase(object):
         with open(self.req_fn, "w") as req_f:
             req_f.write(self.to_xml())
 
-        # save this object to database
-        with shelver(self.db_fn) as db:
-            db[self._db_key] = self
-
-    def _from_obj(self, obj):
-        """
-        Load content of all properties from another :class:`RequestDatabase`
-        object.
-
-        Args:
-            obj (obj): :class:`RequestDatabase` instance.
-        """
-        for key in self.__dict__.keys():
-            if hasattr(obj, key):
-                self.__dict__[key] = getattr(obj, key)
-
-    def _update_self(self):
-        """
-        Update yourself to newest version of object in shelve.
-        """
-        if os.path.exists(self.db_fn):
-            with shelver(self.db_fn) as db:
-                self._from_obj(db[self._db_key])
-                db[self._db_key] = self
+        super(RequestDatabase, self).save()
 
     @staticmethod
     def load(fn=DATABASE_FN, db_key=DATABASE_KEY,
@@ -247,14 +206,8 @@ class RequestDatabase(object):
             obj: :class:`.RequestDatabase` instance from the `fn` or newly
                  created.
         """
-        if not os.path.exists(fn):
-            return creator(fn)
-
-        with shelver(fn) as db:
-            obj = db.get(db_key, None)
-
-        if not obj:
-            return creator(fn)
-
-        obj._update_self()
-        return obj
+        return ShelveDatabase.load(
+            creator=creator,
+            fn=fn,
+            db_key=db_key
+        )
