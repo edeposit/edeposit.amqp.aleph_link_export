@@ -28,6 +28,7 @@ API
 
     /api/link_export.rst
     /api/request_database.rst
+    /api/shelvedb.rst
 
 .. toctree::
     :maxdepth: 1
