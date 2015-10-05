@@ -10,6 +10,7 @@ import tempfile
 
 import pytest
 
+from aleph_link_export import LinkDescription
 from aleph_link_export import LinkUpdateRequest
 from aleph_link_export.request_database import RequestDatabase
 
@@ -88,7 +89,7 @@ def test_save(request_database, link_update_req):
     luq["document_urls"] = luq["document_urls"][:]
     luq = LinkUpdateRequest(**luq)
 
-    luq.document_urls.append("xe")
+    luq.document_urls.append(LinkDescription(url="xe", format="epub"))
 
     request_database.add_request(luq)
 
@@ -108,7 +109,7 @@ def test_save(request_database, link_update_req):
 \t\t<urn_nbn>urn_nbn</urn_nbn>
 \t\t<kramerius_url>kramerius_url</kramerius_url>
 \t\t<document_url>document_urls</document_url>
-\t\t<document_url>xe</document_url>
+\t\t<document_url format="epub">xe</document_url>
 \t</record>
 </records>""" % luq.session_id
 
