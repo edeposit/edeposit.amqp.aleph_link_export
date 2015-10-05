@@ -19,6 +19,18 @@ class LinkDescription(namedtuple("LinkDescription", ["url", "format"])):
         url (str): URL of the document.
         format (str): Format of the document.
     """
+    def to_dict_xml(self):
+        """
+        Serialize the object to dictionary, which may be later used for
+        conversion to XML.
+
+        Retruns:
+            OrderedDict: Itself as ordered dict.
+        """
+        return odict[
+            "#text": self.url,
+            "@format": self.format,
+        ]
 
 
 class LinkUpdateRequest(namedtuple("LinkUpdateRequest", ["uuid",
@@ -68,13 +80,19 @@ class LinkUpdateRequest(namedtuple("LinkUpdateRequest", ["uuid",
         Returns:
             OrderedDict: Itself as ordered dicts.
         """
+        # make sure, that LinkDescription instances are serialized
+        document_urls = [
+            doc.to_dict_xml() if isinstance(doc, LinkDescription) else doc
+            for doc in self.document_urls
+        ]
+
         record = odict[
             "@session_id": self.session_id,
             "uuid": self.uuid,
             "doc_number": self.doc_number,
             "urn_nbn": self.urn_nbn,
             "kramerius_url": self.kramerius_url,
-            "document_url": self.document_urls,
+            "document_url": document_urls,
         ]
 
         if not self.kramerius_url:
