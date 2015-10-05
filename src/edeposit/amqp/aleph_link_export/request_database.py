@@ -142,7 +142,7 @@ class RequestDatabase(ShelveDatabase):
         if session_ids:
             self.log("Sent back responses for: session_id(%s)." % session_ids)
         else:
-            self.log(".get_repsponses(): No requests returned.")
+            self.log(".get_responses(): No requests returned.")
 
         responses = self._resp_queue
         self._resp_queue = []
