@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.2.1
+-----
+    - Added ability to use LinkDescription in `.document_urls` property.
+
 1.2.0
 -----
     - document_url changed to list.
