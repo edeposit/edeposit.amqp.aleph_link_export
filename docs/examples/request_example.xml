@@ -3,12 +3,12 @@
     <record session_id="asd133">
         <uuid>a0f177b4-d083-4175-8f5b-c2748367a4f6</uuid>
         <doc_number>000054231</doc_number>
-        <document_url>http://edeposit-storage/UUID/a0f177b4-d083-4175-8f5b-c2748367a4f6</document_url>
+        <document_url format="mobi">http://edeposit-storage/UUID/a0f177b4-d083-4175-8f5b-c2748367a4f6</document_url>
     </record>
     <record session_id="asd2222">
         <uuid>dd831a9d-a0d8-4537-b518-52b85e5c03a3</uuid>
         <doc_number>000014375</doc_number>
-        <document_url>http://edeposit-storage/UUID/dd831a9d-a0d8-4537-b518-52b85e5c03a3</document_url>
+        <document_url format="epub">http://edeposit-storage/UUID/dd831a9d-a0d8-4537-b518-52b85e5c03a3</document_url>
         <urn_nbn>urn:nbn:cz:edep-000014375</urn_nbn>
     </record>
 </records>

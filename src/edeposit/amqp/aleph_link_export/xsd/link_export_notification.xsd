@@ -5,7 +5,15 @@
     <sequence>
       <element name="uuid" type="string" minOccurs="1" maxOccurs="1" />
       <element name="doc_number" type="string" minOccurs="1" maxOccurs="1" />
-      <element name="document_url" type="anyURI" minOccurs="1" maxOccurs="unbounded" />
+      <element name="document_url" minOccurs="1" maxOccurs="unbounded">
+        <complexType>
+          <simpleContent>
+            <extension base="anyURI">
+              <attribute type="string" name="format" use="optional"/>
+            </extension>
+          </simpleContent>
+        </complexType>
+      </element>
       <element name="urn_nbn" type="string" minOccurs="0" maxOccurs="1" />
       <element name="kramerius_url" type="anyURI" minOccurs="0" maxOccurs="1" />
     </sequence>
