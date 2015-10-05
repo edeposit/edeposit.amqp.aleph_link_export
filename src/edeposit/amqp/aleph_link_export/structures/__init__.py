@@ -5,5 +5,7 @@
 #
 # Imports =====================================================================
 from requests import StatusRequest
+from requests import LinkDescription
 from requests import LinkUpdateRequest
+
 from responses import LinkUpdateResponse

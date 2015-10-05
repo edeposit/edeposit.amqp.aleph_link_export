@@ -10,6 +10,17 @@ from odictliteral import odict
 
 
 # Requests ====================================================================
+class LinkDescription(namedtuple("LinkDescription", ["url", "format"])):
+    """
+    Optional structure, which can be used instead of string to describe the
+    format of the `url`.
+
+    Attributes:
+        url (str): URL of the document.
+        format (str): Format of the document.
+    """
+
+
 class LinkUpdateRequest(namedtuple("LinkUpdateRequest", ["uuid",
                                                          "doc_number",
                                                          "document_urls",
@@ -24,10 +35,11 @@ class LinkUpdateRequest(namedtuple("LinkUpdateRequest", ["uuid",
                    with :mod:`.responses`.
         uuid (str): UUID for the `doc_number` you wish to update.
         doc_number (str): Document number of the document you wish to update.
-                      If there is a summary aleph record for this document at Aleph
-                      please send a doc_number of this summary aleph record.
+                   If there is a summary aleph record for this document at
+                   Aleph please send a `doc_number` of this summary aleph
+                   record.
         document_urls (list): Newly added public URL to the storage / whatever
-                     subsystem.
+                     subsystem. List of strings or :class:`LinkDescription`.
         kramerius_url (str, default None): Newly added URL to the Kramerius
                       subsystem.
         urn_nbn (str, default None): Optional newly added URN:NBN for the
