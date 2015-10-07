@@ -135,7 +135,7 @@ class RequestDatabase(ShelveDatabase):
         self._process_responses()
 
         session_ids = ", ".join(
-            resp.session_id
+            repr(resp)
             for resp in self._resp_queue
         )
 

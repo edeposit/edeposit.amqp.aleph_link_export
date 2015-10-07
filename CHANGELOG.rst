@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.2.2
+-----
+    - Log record updated to include whole responses.
+
 1.2.1
 -----
     - Added ability to use LinkDescription in `.document_urls` property.
